@@ -93,6 +93,7 @@ jobs:
         run: |
           echo "${{ matrix.split_keys }}"
           echo "${{ fromJson(needs.setup.outputs.job_splits)[matrix.split_keys] }}"
+          echo "${{ toJson(fromJson(needs.setup.outputs.job_splits)[matrix.split_keys]) }}"
 
 #  run_doctests:
 #    runs-on: [single-gpu, nvidia-gpu, t4, ci]
