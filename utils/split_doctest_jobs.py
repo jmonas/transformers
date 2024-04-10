@@ -17,9 +17,9 @@ K = sorted(test_collection.keys())
 for k in K:
     if k in ["docs/source/en/model_doc", "docs/source/en/tasks"]:
         for v in sorted(test_collection[k]):
-            sorted_test_collection[v] = [v]
+            sorted_test_collection[v] = v
     else:
-        sorted_test_collection[k] = sorted(test_collection[k])
+        sorted_test_collection[k] = " ".join(sorted(test_collection[k]))
 
 K = sorted(sorted_test_collection.keys())
 print(dict(sorted_test_collection))
