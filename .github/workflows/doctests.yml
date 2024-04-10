@@ -46,11 +46,13 @@ jobs:
         run: pip freeze
 
       - name: Check
+        working-directory: /transformers
         run: |
           python3 utils/split_doctest_jobs.py
           python3 utils/get_doctest_job_keys.py
 
       - id: set-matrix
+        working-directory: /transformers
         name: Identify models to test
         run: |
           echo "job_splits=$(python3 utils/split_doctest_jobs.py)" >> $GITHUB_OUTPUT
