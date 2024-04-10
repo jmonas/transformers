@@ -82,7 +82,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        split_keys: ${{ fromJson(needs.setup.outputs.split_keys)[0:4] }}
+        split_keys: ${{ fromJson(needs.setup.outputs.split_keys) }}
     runs-on: [single-gpu, nvidia-gpu, t4, daily-ci]
     container:
       image: huggingface/transformers-all-latest-gpu
