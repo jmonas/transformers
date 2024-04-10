@@ -22,7 +22,7 @@ for k in K:
         sorted_test_collection[k] = sorted(test_collection[k])
 
 K = sorted(sorted_test_collection.keys())
-print(sorted_test_collection)
+print(K)
 
 
 # for k in K:

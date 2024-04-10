@@ -76,6 +76,24 @@ jobs:
         run: |
           echo "${{ needs.setup.outputs.split_keys }}"
 
+  run_matrix:
+    name: "Run matrix"
+    needs: setup
+    strategy:
+      fail-fast: false
+      matrix:
+        split_keys: ${{ fromJson(needs.setup.outputs.split_keys)[0:4] }}
+    runs-on: [single-gpu, nvidia-gpu, t4, daily-ci]
+    container:
+      image: huggingface/transformers-all-latest-gpu
+      options: --gpus 0 --shm-size "16gb" --ipc host -v /mnt/cache/.cache/huggingface:/mnt/cache/
+    steps:
+      - name: Check matrix 1
+        working-directory: /transformers
+        run: |
+          echo "${{ matrix.split_keys }}"
+          echo "${{ fromJson(needs.setup.outputs.job_splits)[matrix.split_keys] }}"
+
 #  run_doctests:
 #    runs-on: [single-gpu, nvidia-gpu, t4, ci]
 #    container:
