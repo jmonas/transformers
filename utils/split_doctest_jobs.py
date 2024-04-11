@@ -86,7 +86,6 @@ if __name__ == "__main__":
         file_directory_splits.append(sorted_file_dirs[start:end])
 
     if args.only_return_keys:
-        breakpoint()
         print(file_directory_splits)
     else:
         print(dict(test_collection_map))
