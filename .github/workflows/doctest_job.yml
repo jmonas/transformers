@@ -40,6 +40,7 @@ jobs:
         run: python3 -m pip uninstall -y transformers && python3 -m pip install -e .[flax]
 
       - name: GPU visibility
+        working-directory: /transformers
         run: |
           python3 utils/print_env.py
 
