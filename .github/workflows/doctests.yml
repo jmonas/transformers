@@ -49,14 +49,14 @@ jobs:
         working-directory: /transformers
         run: |
           python3 utils/split_doctest_jobs.py
-          python3 utils/get_doctest_job_keys.py
+          python3 utils/split_doctest_jobs.py --only_return_keys --num_splits 3
 
       - id: set-matrix
         working-directory: /transformers
         name: Identify models to test
         run: |
           echo "job_splits=$(python3 utils/split_doctest_jobs.py)" >> $GITHUB_OUTPUT
-          echo "split_keys=$(python3 utils/get_doctest_job_keys.py)" >> $GITHUB_OUTPUT
+          echo "split_keys=$(python3 utils/split_doctest_jobs.py --only_return_keys --num_splits 3)" >> $GITHUB_OUTPUT
 
   check_matrix:
     name: "Check matrix"
