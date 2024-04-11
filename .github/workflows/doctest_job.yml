@@ -55,8 +55,8 @@ jobs:
 
       - name: Set name
         run: |
-          echo "${{ matrix.split_keys }} "
-          split_keys=${{ ${{ matrix.split_keys }}  }}
+          echo "${{ matrix.split_keys }}"
+          split_keys=${{ matrix.split_keys }}
           split_keys=${split_keys/'/'/'_'}
           echo "split_keys"
           echo "split_keys=$split_keys" >> $GITHUB_ENV
