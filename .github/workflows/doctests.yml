@@ -24,12 +24,9 @@ jobs:
         run: |
           git fetch && git checkout ${{ github.sha }}
 
-      - name: Cleanup
+      - name: Reinstall transformers in edit mode (remove the one installed during docker image build)
         working-directory: /transformers
-        run: |
-          rm -rf tests/__pycache__
-          rm -rf tests/models/__pycache__
-          rm -rf reports
+        run: python3 -m pip uninstall -y transformers && python3 -m pip install -e .
 
       - name: Show installed libraries and their versions
         working-directory: /transformers
