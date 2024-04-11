@@ -96,7 +96,38 @@ jobs:
 #          echo "${{ toJson(fromJson(needs.setup.outputs.job_splits)[matrix.split_keys]) }}"
 #          echo "${{ toJson(fromJson(needs.setup.outputs.job_splits)[matrix.split_keys]) }}" > doc_tests.txt
 #          cat doc_tests.txt
-#
+
+
+  run_matrix:
+    name: "Run matrix 2 - nested"
+    needs: setup
+    strategy:
+      fail-fast: false
+      matrix:
+        split_keys: ${{ fromJson(needs.setup.outputs.split_keys) }}
+    runs-on: [single-gpu, nvidia-gpu, t4, ci]
+    container:
+      image: huggingface/transformers-all-latest-gpu
+      options: --gpus 0 --shm-size "16gb" --ipc host -v /mnt/cache/.cache/huggingface:/mnt/cache/
+    steps:
+      - name: Check matrix 2 - nested
+        working-directory: /transformers
+        run: |
+          echo "${{ matrix.split_keys }}"
+
+  call_matrix:
+    name: "Call matrix"
+    needs: setup
+    strategy:
+      fail-fast: false
+      matrix:
+        split_keys: ${{ fromJson(needs.setup.outputs.split_keys) }}
+    uses: ./.github/workflows/doctest_job.yml
+    with:
+      job_splits: ${{ needs.setup.outputs.job_splits }}
+      split_keys: ${{ matrix.split_keys }}
+    secrets: inherit
+
 #  run_doctests:
 #    needs: setup
 #    strategy:

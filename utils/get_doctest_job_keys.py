@@ -22,7 +22,7 @@ for k in K:
         sorted_test_collection[k] = " ".join(sorted(test_collection[k]))
 
 K = sorted(sorted_test_collection.keys())
-print(K[0:4])
+
 
 num_splits = 2
 num_jobs = len(K)
@@ -35,12 +35,3 @@ for idx in range(num_splits):
     end = start + num_jobs_per_splits + (1 if idx < num_jobs % num_splits else 0)
     job_splits.append(K[start:end])
 print(job_splits)
-
-
-# for k in K:
-    # print(k)
-    # print(sorted_test_collection[k])
-    # print("-" * 80)
-
-
-# print(len(sorted_test_collection))

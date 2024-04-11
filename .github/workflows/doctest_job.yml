@@ -1,0 +1,42 @@
+name: Doctests
+
+on:
+  workflow_call:
+    inputs:
+      job_splits:
+        required: true
+        type: string
+      split_keys:
+        required: true
+        type: string
+
+
+env:
+  HF_HOME: /mnt/cache
+  TRANSFORMERS_IS_CI: yes
+  RUN_SLOW: yes
+  OMP_NUM_THREADS: 16
+  MKL_NUM_THREADS: 16
+  SIGOPT_API_TOKEN: ${{ secrets.SIGOPT_API_TOKEN }}
+  TF_FORCE_GPU_ALLOW_GROWTH: true
+
+jobs:
+  run_matrix:
+    name: "Run matrix"
+    strategy:
+      fail-fast: false
+      matrix:
+        split_keys: ${{ inputs.split_keys }}
+    runs-on: [single-gpu, nvidia-gpu, t4, ci]
+    container:
+      image: huggingface/transformers-all-latest-gpu
+      options: --gpus 0 --shm-size "16gb" --ipc host -v /mnt/cache/.cache/huggingface:/mnt/cache/
+    steps:
+      - name: Check matrix - callee
+        working-directory: /transformers
+        run: |
+          echo "${{ matrix.split_keys }}"
+          echo "${{ fromJson(inputs.job_splits)[matrix.split_keys] }}"
+          echo "${{ toJson(fromJson(inputs.job_splits)[matrix.split_keys]) }}"
+          echo "${{ toJson(fromJson(inputs.job_splits)[matrix.split_keys]) }}" > doc_tests.txt
+          cat doc_tests.txt
