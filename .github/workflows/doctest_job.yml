@@ -58,21 +58,21 @@ jobs:
         # TODO: use better name for `--make-reports`
         run: |
           cat doc_tests.txt
-          python3 -m pytest -v --make-reports doc_tests_gpu --doctest-modules $(cat doc_tests.txt) -sv --doctest-continue-on-failure --doctest-glob="*.md"
+          python3 -m pytest -v --make-reports doc_tests_gpu_${{ matrix.split_keys }} --doctest-modules $(cat doc_tests.txt) -sv --doctest-continue-on-failure --doctest-glob="*.md"
 
-#       # TODO: use better name for `--make-reports`
-#      - name: Failure short reports
-#        if: ${{ failure() }}
-#        continue-on-error: true
-#        run: cat reports/doc_tests_gpu/failures_short.txt
-#
-#       # TODO: use better name for `--make-reports`
-#      - name: Test suite reports artifacts
-#        if: ${{ always() }}
-#        uses: actions/upload-artifact@v3
-#        with:
-#          name: doc_tests_gpu_test_reports
-#          path: reports/doc_tests_gpu
+       # TODO: use better name for `--make-reports`
+      - name: Failure short reports
+        if: ${{ failure() }}
+        continue-on-error: true
+        run: cat reports/doc_tests_gpu_${{ matrix.split_keys }}/failures_short.txt
+
+       # TODO: use better name for `--make-reports`
+      - name: Test suite reports artifacts
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v3
+        with:
+          name: doc_tests_gpu_test_reports_${{ matrix.split_keys }}
+          path: reports/doc_tests_gpu_${{ matrix.split_keys }}
 
 #  send_results:
 #    name: Send results to webhook
