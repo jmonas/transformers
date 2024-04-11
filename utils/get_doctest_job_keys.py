@@ -24,7 +24,7 @@ for k in K:
 K = sorted(sorted_test_collection.keys())
 
 
-num_splits = 2
+num_splits = 3
 num_jobs = len(K)
 num_jobs_per_splits = num_jobs // num_splits
 
