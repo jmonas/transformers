@@ -54,6 +54,7 @@ jobs:
           cat doc_tests.txt
 
       - name: Set name
+        shell: bash
         run: |
           echo "${{ matrix.split_keys }}"
           split_keys=${{ matrix.split_keys }}
