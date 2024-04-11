@@ -125,7 +125,7 @@ jobs:
     uses: ./.github/workflows/doctest_job.yml
     with:
       job_splits: ${{ needs.setup.outputs.job_splits }}
-      split_keys: ${{ matrix.split_keys }}
+      split_keys: ${{ toJson(matrix.split_keys) }}
     secrets: inherit
 
 #  run_doctests:
