@@ -24,6 +24,18 @@ for k in K:
 K = sorted(sorted_test_collection.keys())
 print(K[0:4])
 
+num_splits = 2
+num_jobs = len(K)
+num_jobs_per_splits = num_jobs // num_splits
+
+job_splits = []
+end = 0
+for idx in range(num_splits):
+    start = end
+    end = start + num_jobs_per_splits + (1 if idx < num_jobs % num_splits else 0)
+    job_splits.append(K[start:end])
+print(job_splits)
+
 
 # for k in K:
     # print(k)
