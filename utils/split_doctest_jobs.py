@@ -22,7 +22,21 @@ for k in K:
         sorted_test_collection[k] = " ".join(sorted(test_collection[k]))
 
 K = sorted(sorted_test_collection.keys())
-print(dict(sorted_test_collection))
+# print(dict(sorted_test_collection))
+
+num_splits = 4
+
+num_jobs = len(K)
+num_jobs_per_splits = num_jobs // num_splits
+
+job_splits = []
+end = 0
+for idx in range(num_splits):
+    start = end
+    end = start + num_jobs_per_splits + (1 if idx < num_jobs % num_splits else 0)
+    job_splits.append(K[start:end])
+print(job_splits)
+
 
 
 # for k in K:
